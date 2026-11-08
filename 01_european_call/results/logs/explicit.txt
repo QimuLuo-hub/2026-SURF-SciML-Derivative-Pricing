@@ -1,0 +1,231 @@
+
+=== Original single-run case ===
+Original single-run case
+Grid (M, N) = (400, 7006) | sigma = 0.2000 | dS = 0.750000, dt = 0.000143
+  Stability check: dt_limit = 1.570330e-04, stable = True
+  Maximum absolute error = 3.373737e-04
+  RMSE = 9.740628e-05
+  Relative L2 error = 9.943882e-07
+  S closest to 100.0: 99.7500
+  FDM price at S=99.7500:   10.291894
+  Exact price at S=99.7500: 10.291964
+  Pointwise absolute error: 6.910259e-05
+----------------------------------------------------------------------
+
+=== Comparison 1: Vary both M and N ===
+Comparison 1: Vary both M and N
+Grid (M, N) = (50, 250) | sigma = 0.2000 | dS = 6.000000, dt = 0.004000
+  Stability check: dt_limit = 1.040691e-02, stable = True
+  Maximum absolute error = 2.672582e-02
+  RMSE = 7.156141e-03
+  Relative L2 error = 7.230720e-05
+  S closest to 100.0: 102.0000
+  FDM price at S=102.0000:   11.752092
+  Exact price at S=102.0000: 11.761064
+  Pointwise absolute error: 8.971982e-03
+----------------------------------------------------------------------
+Comparison 1: Vary both M and N
+Grid (M, N) = (100, 1000) | sigma = 0.2000 | dS = 3.000000, dt = 0.001000
+  Stability check: dt_limit = 2.550435e-03, stable = True
+  Maximum absolute error = 6.201659e-03
+  RMSE = 1.748202e-03
+  Relative L2 error = 1.776779e-05
+  S closest to 100.0: 99.0000
+  FDM price at S=99.0000:   9.820680
+  Exact price at S=99.0000: 9.823219
+  Pointwise absolute error: 2.538422e-03
+----------------------------------------------------------------------
+Comparison 1: Vary both M and N
+Grid (M, N) = (200, 4000) | sigma = 0.2000 | dS = 1.500000, dt = 0.000250
+  Stability check: dt_limit = 6.312773e-04, stable = True
+  Maximum absolute error = 1.619930e-03
+  RMSE = 4.433550e-04
+  Relative L2 error = 4.519350e-06
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   10.770741
+  Exact price at S=100.5000: 10.771333
+  Pointwise absolute error: 5.921182e-04
+----------------------------------------------------------------------
+Comparison 1: Vary both M and N
+Grid (M, N) = (400, 16000) | sigma = 0.2000 | dS = 0.750000, dt = 0.000063
+  Stability check: dt_limit = 1.570330e-04, stable = True
+  Maximum absolute error = 3.975280e-04
+  RMSE = 1.102413e-04
+  Relative L2 error = 1.125417e-06
+  S closest to 100.0: 99.7500
+  FDM price at S=99.7500:   10.291811
+  Exact price at S=99.7500: 10.291964
+  Pointwise absolute error: 1.529012e-04
+----------------------------------------------------------------------
+
+=== Comparison 2: Fix M and vary N ===
+WARNING: explicit scheme may be unstable because dt = 1.000000e-03 exceeds the practical stability limit 6.312773e-04.
+Comparison 2: Fix M and vary N
+Grid (M, N) = (200, 1000) | sigma = 0.2000 | dS = 1.500000, dt = 0.001000
+  Stability check: dt_limit = 6.312773e-04, stable = False
+  WARNING: this run violates the explicit stability bound, so overflow/NaN may appear and the plotted numerical solution may be meaningless.
+  Maximum absolute error = 1.020941e+289
+  RMSE = inf
+  Relative L2 error = inf
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   23693320361184196740572906948976339152058447846527865485022472649640327069680531837553637065035525571450994623055399863148547471108155008278373035536647630363180251327811675634607815917568.000000
+  Exact price at S=100.5000: 10.771333
+  Pointwise absolute error: 2.369332e+187
+----------------------------------------------------------------------
+Comparison 2: Fix M and vary N
+Grid (M, N) = (200, 2000) | sigma = 0.2000 | dS = 1.500000, dt = 0.000500
+  Stability check: dt_limit = 6.312773e-04, stable = True
+  Maximum absolute error = 1.431191e-03
+  RMSE = 4.006212e-04
+  Relative L2 error = 4.083742e-06
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   10.771006
+  Exact price at S=100.5000: 10.771333
+  Pointwise absolute error: 3.276917e-04
+----------------------------------------------------------------------
+fdm_explicit.py:180: RuntimeWarning: overflow encountered in square
+  rmse = np.sqrt(np.mean(abs_error**2))
+Comparison 2: Fix M and vary N
+Grid (M, N) = (200, 4000) | sigma = 0.2000 | dS = 1.500000, dt = 0.000250
+  Stability check: dt_limit = 6.312773e-04, stable = True
+  Maximum absolute error = 1.619930e-03
+  RMSE = 4.433550e-04
+  Relative L2 error = 4.519350e-06
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   10.770741
+  Exact price at S=100.5000: 10.771333
+  Pointwise absolute error: 5.921182e-04
+----------------------------------------------------------------------
+Comparison 2: Fix M and vary N
+Grid (M, N) = (200, 8000) | sigma = 0.2000 | dS = 1.500000, dt = 0.000125
+  Stability check: dt_limit = 6.312773e-04, stable = True
+  Maximum absolute error = 1.714278e-03
+  RMSE = 4.688717e-04
+  Relative L2 error = 4.779455e-06
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   10.770609
+  Exact price at S=100.5000: 10.771333
+  Pointwise absolute error: 7.243285e-04
+----------------------------------------------------------------------
+Comparison 2: Fix M and vary N
+Grid (M, N) = (200, 16000) | sigma = 0.2000 | dS = 1.500000, dt = 0.000063
+  Stability check: dt_limit = 6.312773e-04, stable = True
+  Maximum absolute error = 1.761447e-03
+  RMSE = 4.824830e-04
+  Relative L2 error = 4.918202e-06
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   10.770543
+  Exact price at S=100.5000: 10.771333
+  Pointwise absolute error: 7.904329e-04
+----------------------------------------------------------------------
+
+=== Comparison 3: Fix N and vary M ===
+Comparison 3: Fix N and vary M
+Grid (M, N) = (50, 4000) | sigma = 0.2000 | dS = 6.000000, dt = 0.000250
+  Stability check: dt_limit = 1.040691e-02, stable = True
+  Maximum absolute error = 2.951160e-02
+  RMSE = 7.950811e-03
+  Relative L2 error = 8.033672e-05
+  S closest to 100.0: 102.0000
+  FDM price at S=102.0000:   11.748062
+  Exact price at S=102.0000: 11.761064
+  Pointwise absolute error: 1.300165e-02
+----------------------------------------------------------------------
+Comparison 3: Fix N and vary M
+Grid (M, N) = (100, 4000) | sigma = 0.2000 | dS = 3.000000, dt = 0.000250
+  Stability check: dt_limit = 2.550435e-03, stable = True
+  Maximum absolute error = 6.744835e-03
+  RMSE = 1.899573e-03
+  Relative L2 error = 1.930624e-05
+  S closest to 100.0: 99.0000
+  FDM price at S=99.0000:   9.819909
+  Exact price at S=99.0000: 9.823219
+  Pointwise absolute error: 3.309294e-03
+----------------------------------------------------------------------
+Comparison 3: Fix N and vary M
+Grid (M, N) = (200, 4000) | sigma = 0.2000 | dS = 1.500000, dt = 0.000250
+  Stability check: dt_limit = 6.312773e-04, stable = True
+  Maximum absolute error = 1.619930e-03
+  RMSE = 4.433550e-04
+  Relative L2 error = 4.519350e-06
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   10.770741
+  Exact price at S=100.5000: 10.771333
+  Pointwise absolute error: 5.921182e-04
+----------------------------------------------------------------------
+WARNING: explicit scheme may be unstable because dt = 2.500000e-04 exceeds the practical stability limit 1.570330e-04.
+Comparison 3: Fix N and vary M
+Grid (M, N) = (400, 4000) | sigma = 0.2000 | dS = 0.750000, dt = 0.000250
+  Stability check: dt_limit = 1.570330e-04, stable = False
+  WARNING: this run violates the explicit stability bound, so overflow/NaN may appear and the plotted numerical solution may be meaningless.
+  Maximum absolute error = nan
+  RMSE = nan
+  Relative L2 error = nan
+  S closest to 100.0: 99.7500
+  FDM price at S=99.7500:   nan
+  Exact price at S=99.7500: 10.291964
+  Pointwise absolute error: nan
+----------------------------------------------------------------------
+
+=== Comparison 4: Fix grid and vary sigma ===
+Comparison 4: Fix grid and vary sigma
+Grid (M, N) = (200, 4000) | sigma = 0.1000 | dS = 1.500000, dt = 0.000250
+  Stability check: dt_limit = 2.524870e-03, stable = True
+  Maximum absolute error = 5.861415e-03
+  RMSE = 1.234601e-03
+  Relative L2 error = 1.259174e-05
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   7.160190
+  Exact price at S=100.5000: 7.163618
+  Pointwise absolute error: 3.427310e-03
+----------------------------------------------------------------------
+fdm_explicit.py:97: RuntimeWarning: overflow encountered in add
+  V[1:M] = a * V_next[0:M - 1] + b * V_next[1:M] + c * V_next[2:M + 1]
+fdm_explicit.py:97: RuntimeWarning: invalid value encountered in add
+  V[1:M] = a * V_next[0:M - 1] + b * V_next[1:M] + c * V_next[2:M + 1]
+Comparison 4: Fix grid and vary sigma
+Grid (M, N) = (200, 4000) | sigma = 0.1500 | dS = 1.500000, dt = 0.000250
+  Stability check: dt_limit = 1.122243e-03, stable = True
+  Maximum absolute error = 2.786105e-03
+  RMSE = 6.610226e-04
+  Relative L2 error = 6.740640e-06
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   8.922628
+  Exact price at S=100.5000: 8.923941
+  Pointwise absolute error: 1.312808e-03
+----------------------------------------------------------------------
+Comparison 4: Fix grid and vary sigma
+Grid (M, N) = (200, 4000) | sigma = 0.2000 | dS = 1.500000, dt = 0.000250
+  Stability check: dt_limit = 6.312773e-04, stable = True
+  Maximum absolute error = 1.619930e-03
+  RMSE = 4.433550e-04
+  Relative L2 error = 4.519350e-06
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   10.770741
+  Exact price at S=100.5000: 10.771333
+  Pointwise absolute error: 5.921182e-04
+----------------------------------------------------------------------
+Comparison 4: Fix grid and vary sigma
+Grid (M, N) = (200, 4000) | sigma = 0.2500 | dS = 1.500000, dt = 0.000250
+  Stability check: dt_limit = 4.040220e-04, stable = True
+  Maximum absolute error = 1.032756e-03
+  RMSE = 3.594902e-04
+  Relative L2 error = 3.661967e-06
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   12.651361
+  Exact price at S=100.5000: 12.651588
+  Pointwise absolute error: 2.278009e-04
+----------------------------------------------------------------------
+Comparison 4: Fix grid and vary sigma
+Grid (M, N) = (200, 4000) | sigma = 0.3000 | dS = 1.500000, dt = 0.000250
+  Stability check: dt_limit = 2.805726e-04, stable = True
+  Maximum absolute error = 7.556707e-04
+  RMSE = 3.679011e-04
+  Relative L2 error = 3.743334e-06
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   14.544964
+  Exact price at S=100.5000: 14.544956
+  Pointwise absolute error: 8.023465e-06
+----------------------------------------------------------------------
+
+Process finished with exit code 0

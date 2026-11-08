@@ -1,0 +1,222 @@
+
+=== Original single-run case ===
+Original single-run case
+Grid (M, N) = (400, 7006) | sigma = 0.2000 | dS = 0.750000, dt = 0.000143
+  Maximum absolute error = 4.447620e-04
+  RMSE = 1.234120e-04
+  Relative L2 error = 1.259872e-06
+  S closest to 100.0: 99.7500
+  FDM price at S=99.7500:   10.291745
+  Exact price at S=99.7500: 10.291964
+  Pointwise absolute error: 2.181717e-04
+----------------------------------------------------------------------
+
+=== Comparison 1: Vary both M and N with N = M ===
+Comparison 1: Vary both M and N with N = M
+Grid (M, N) = (50, 50) | sigma = 0.2000 | dS = 6.000000, dt = 0.020000
+  Maximum absolute error = 2.963560e-02
+  RMSE = 7.986495e-03
+  Relative L2 error = 8.069727e-05
+  S closest to 100.0: 102.0000
+  FDM price at S=102.0000:   11.747895
+  Exact price at S=102.0000: 11.761064
+  Pointwise absolute error: 1.316925e-02
+----------------------------------------------------------------------
+Comparison 1: Vary both M and N with N = M
+Grid (M, N) = (100, 100) | sigma = 0.2000 | dS = 3.000000, dt = 0.010000
+  Maximum absolute error = 6.915116e-03
+  RMSE = 1.949140e-03
+  Relative L2 error = 1.981001e-05
+  S closest to 100.0: 99.0000
+  FDM price at S=99.0000:   9.819677
+  Exact price at S=99.0000: 9.823219
+  Pointwise absolute error: 3.541981e-03
+----------------------------------------------------------------------
+Comparison 1: Vary both M and N with N = M
+Grid (M, N) = (200, 200) | sigma = 0.2000 | dS = 1.500000, dt = 0.005000
+  Maximum absolute error = 1.805061e-03
+  RMSE = 4.952399e-04
+  Relative L2 error = 5.048240e-06
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   10.770483
+  Exact price at S=100.5000: 10.771333
+  Pointwise absolute error: 8.502828e-04
+----------------------------------------------------------------------
+Comparison 1: Vary both M and N with N = M
+Grid (M, N) = (400, 400) | sigma = 0.2000 | dS = 0.750000, dt = 0.002500
+  Maximum absolute error = 4.438716e-04
+  RMSE = 1.230730e-04
+  Relative L2 error = 1.256412e-06
+  S closest to 100.0: 99.7500
+  FDM price at S=99.7500:   10.291747
+  Exact price at S=99.7500: 10.291964
+  Pointwise absolute error: 2.166327e-04
+----------------------------------------------------------------------
+Comparison 1: Vary both M and N with N = M
+Grid (M, N) = (800, 800) | sigma = 0.2000 | dS = 0.375000, dt = 0.001250
+  Maximum absolute error = 1.118986e-04
+  RMSE = 3.089660e-05
+  Relative L2 error = 3.156479e-07
+  S closest to 100.0: 100.1250
+  FDM price at S=100.1250:   10.530280
+  Exact price at S=100.1250: 10.530334
+  Pointwise absolute error: 5.363311e-05
+----------------------------------------------------------------------
+
+=== Comparison 2: Fix M and vary N ===
+Comparison 2: Fix M and vary N
+Grid (M, N) = (200, 50) | sigma = 0.2000 | dS = 1.500000, dt = 0.020000
+  Maximum absolute error = 1.751771e-03
+  RMSE = 4.752507e-04
+  Relative L2 error = 4.844479e-06
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   10.770577
+  Exact price at S=100.5000: 10.771333
+  Pointwise absolute error: 7.564846e-04
+----------------------------------------------------------------------
+Comparison 2: Fix M and vary N
+Grid (M, N) = (200, 100) | sigma = 0.2000 | dS = 1.500000, dt = 0.010000
+  Maximum absolute error = 1.794406e-03
+  RMSE = 4.911770e-04
+  Relative L2 error = 5.006825e-06
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   10.770502
+  Exact price at S=100.5000: 10.771333
+  Pointwise absolute error: 8.315213e-04
+----------------------------------------------------------------------
+Comparison 2: Fix M and vary N
+Grid (M, N) = (200, 200) | sigma = 0.2000 | dS = 1.500000, dt = 0.005000
+  Maximum absolute error = 1.805061e-03
+  RMSE = 4.952399e-04
+  Relative L2 error = 5.048240e-06
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   10.770483
+  Exact price at S=100.5000: 10.771333
+  Pointwise absolute error: 8.502828e-04
+----------------------------------------------------------------------
+Comparison 2: Fix M and vary N
+Grid (M, N) = (200, 400) | sigma = 0.2000 | dS = 1.500000, dt = 0.002500
+  Maximum absolute error = 1.807724e-03
+  RMSE = 4.962605e-04
+  Relative L2 error = 5.058643e-06
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   10.770478
+  Exact price at S=100.5000: 10.771333
+  Pointwise absolute error: 8.549733e-04
+----------------------------------------------------------------------
+Comparison 2: Fix M and vary N
+Grid (M, N) = (200, 800) | sigma = 0.2000 | dS = 1.500000, dt = 0.001250
+  Maximum absolute error = 1.808390e-03
+  RMSE = 4.965159e-04
+  Relative L2 error = 5.061247e-06
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   10.770477
+  Exact price at S=100.5000: 10.771333
+  Pointwise absolute error: 8.561460e-04
+----------------------------------------------------------------------
+
+=== Comparison 3: Fix N and vary M ===
+Comparison 3: Fix N and vary M
+Grid (M, N) = (50, 200) | sigma = 0.2000 | dS = 6.000000, dt = 0.005000
+  Maximum absolute error = 2.969305e-02
+  RMSE = 8.006351e-03
+  Relative L2 error = 8.089791e-05
+  S closest to 100.0: 102.0000
+  FDM price at S=102.0000:   11.747800
+  Exact price at S=102.0000: 11.761064
+  Pointwise absolute error: 1.326391e-02
+----------------------------------------------------------------------
+Comparison 3: Fix N and vary M
+Grid (M, N) = (100, 200) | sigma = 0.2000 | dS = 3.000000, dt = 0.005000
+  Maximum absolute error = 6.923109e-03
+  RMSE = 1.953165e-03
+  Relative L2 error = 1.985092e-05
+  S closest to 100.0: 99.0000
+  FDM price at S=99.0000:   9.819659
+  Exact price at S=99.0000: 9.823219
+  Pointwise absolute error: 3.560173e-03
+----------------------------------------------------------------------
+Comparison 3: Fix N and vary M
+Grid (M, N) = (200, 200) | sigma = 0.2000 | dS = 1.500000, dt = 0.005000
+  Maximum absolute error = 1.805061e-03
+  RMSE = 4.952399e-04
+  Relative L2 error = 5.048240e-06
+  S closest to 100.0: 100.5000
+  FDM price at S=100.5000:   10.770483
+  Exact price at S=100.5000: 10.771333
+  Pointwise absolute error: 8.502828e-04
+----------------------------------------------------------------------
+Comparison 3: Fix N and vary M
+Grid (M, N) = (400, 200) | sigma = 0.2000 | dS = 0.750000, dt = 0.005000
+  Maximum absolute error = 4.411917e-04
+  RMSE = 1.220581e-04
+  Relative L2 error = 1.246050e-06
+  S closest to 100.0: 99.7500
+  FDM price at S=99.7500:   10.291752
+  Exact price at S=99.7500: 10.291964
+  Pointwise absolute error: 2.120006e-04
+----------------------------------------------------------------------
+Comparison 3: Fix N and vary M
+Grid (M, N) = (800, 200) | sigma = 0.2000 | dS = 0.375000, dt = 0.005000
+  Maximum absolute error = 1.086751e-04
+  RMSE = 2.964520e-05
+  Relative L2 error = 3.028633e-07
+  S closest to 100.0: 100.1250
+  FDM price at S=100.1250:   10.530286
+  Exact price at S=100.1250: 10.530334
+  Pointwise absolute error: 4.780246e-05
+----------------------------------------------------------------------
+
+=== Comparison 4: Fix grid and vary sigma ===
+Comparison 4: Fix grid and vary sigma
+Grid (M, N) = (400, 400) | sigma = 0.1000 | dS = 0.750000, dt = 0.002500
+  Maximum absolute error = 1.482818e-03
+  RMSE = 3.114048e-04
+  Relative L2 error = 3.180754e-06
+  S closest to 100.0: 99.7500
+  FDM price at S=99.7500:   6.627968
+  Exact price at S=99.7500: 6.628825
+  Pointwise absolute error: 8.570571e-04
+----------------------------------------------------------------------
+Comparison 4: Fix grid and vary sigma
+Grid (M, N) = (400, 400) | sigma = 0.1500 | dS = 0.750000, dt = 0.002500
+  Maximum absolute error = 7.295753e-04
+  RMSE = 1.748077e-04
+  Relative L2 error = 1.785216e-06
+  S closest to 100.0: 99.7500
+  FDM price at S=99.7500:   8.427432
+  Exact price at S=99.7500: 8.427804
+  Pointwise absolute error: 3.720221e-04
+----------------------------------------------------------------------
+Comparison 4: Fix grid and vary sigma
+Grid (M, N) = (400, 400) | sigma = 0.2000 | dS = 0.750000, dt = 0.002500
+  Maximum absolute error = 4.438716e-04
+  RMSE = 1.230730e-04
+  Relative L2 error = 1.256412e-06
+  S closest to 100.0: 99.7500
+  FDM price at S=99.7500:   10.291747
+  Exact price at S=99.7500: 10.291964
+  Pointwise absolute error: 2.166327e-04
+----------------------------------------------------------------------
+Comparison 4: Fix grid and vary sigma
+Grid (M, N) = (400, 400) | sigma = 0.2500 | dS = 0.750000, dt = 0.002500
+  Maximum absolute error = 3.013269e-04
+  RMSE = 1.015150e-04
+  Relative L2 error = 1.035621e-06
+  S closest to 100.0: 99.7500
+  FDM price at S=99.7500:   12.179476
+  Exact price at S=99.7500: 12.179620
+  Pointwise absolute error: 1.447765e-04
+----------------------------------------------------------------------
+Comparison 4: Fix grid and vary sigma
+Grid (M, N) = (400, 400) | sigma = 0.3000 | dS = 0.750000, dt = 0.002500
+  Maximum absolute error = 7.556707e-04
+  RMSE = 1.694638e-04
+  Relative L2 error = 1.726810e-06
+  S closest to 100.0: 99.7500
+  FDM price at S=99.7500:   14.075484
+  Exact price at S=99.7500: 14.075588
+  Pointwise absolute error: 1.033391e-04
+----------------------------------------------------------------------
+
+Process finished with exit code 0

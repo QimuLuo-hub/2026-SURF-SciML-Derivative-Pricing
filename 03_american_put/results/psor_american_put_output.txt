@@ -1,0 +1,45 @@
+Model parameters
+  Strike E   = 10.0
+  Rate r     = 0.1
+  Sigma      = 0.4
+  Theta      = 0.5  (0.5-Crank–Nicolson; 0-Ex; 1-Im)
+  Alpha      = 1.0
+  dx         = 0.01
+  dt         = 0.0001
+  x-range    = [-6.0, 6.0]
+
+
+Searching optimal omega...
+omega=1.00, iterations=12
+omega=1.10, iterations=10
+omega=1.20, iterations=9
+omega=1.30, iterations=12
+omega=1.40, iterations=15
+omega=1.50, iterations=20
+omega=1.60, iterations=26
+omega=1.70, iterations=37
+omega=1.80, iterations=59
+omega=1.90, iterations=139
+Best omega ≈ 1.20
+
+ Asset Price    Payoff Value    3 Months Amer.    6 Months Amer.
+----------------------------------------------------------------
+        0.00         10.0000           10.0000           10.0000
+        2.00          8.0000            8.0000            8.0000
+        4.00          6.0000            5.9999            5.9999
+        6.00          4.0000            4.0000            4.0000
+        8.00          2.0000            2.0202            2.0953
+       10.00          0.0000            0.6920            0.9217
+       12.00          0.0000            0.1712            0.3624
+       14.00          0.0000            0.0332            0.1321
+       16.00          0.0000            0.0055            0.0460
+Detected 3M boundary at t=0: 7.557837414557253
+Detected 6M boundary at t=0: 7.117703227626019
+S= 5.5 | 3M premium=-5.780011e-05 | 6M premium=-5.780011e-05
+S= 6.0 | 3M premium=-2.807838e-05 | 6M premium=-2.807838e-05
+S= 6.5 | 3M premium=-2.902507e-05 | 6M premium=-2.902507e-05
+S= 7.0 | 3M premium=-9.670464e-05 | 6M premium=-9.670464e-05
+S= 7.5 | 3M premium=-8.329023e-05 | 6M premium=+1.877495e-02
+S= 8.0 | 3M premium=+2.015763e-02 | 6M premium=+9.532681e-02
+3M free boundary: S_f(t=0) ≈ 7.557837, S_f(t near maturity) ≈ 9.607894
+6M free boundary: S_f(t=0) ≈ 7.117703, S_f(t near maturity) ≈ 9.607894

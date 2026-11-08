@@ -1,0 +1,25 @@
+/private/tmp/claude-501/-Users-daisy-Desktop-option-python-code/027fe4cc-71b2-4b37-b15d-5b2e227d6b61/scratchpad/repo/02_obstacle_problem/psor_obstacle_2d.py:195: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+/private/tmp/claude-501/-Users-daisy-Desktop-option-python-code/027fe4cc-71b2-4b37-b15d-5b2e227d6b61/scratchpad/repo/02_obstacle_problem/psor_obstacle_2d.py:209: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+/private/tmp/claude-501/-Users-daisy-Desktop-option-python-code/027fe4cc-71b2-4b37-b15d-5b2e227d6b61/scratchpad/repo/02_obstacle_problem/psor_obstacle_2d.py:233: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+/private/tmp/claude-501/-Users-daisy-Desktop-option-python-code/027fe4cc-71b2-4b37-b15d-5b2e227d6b61/scratchpad/repo/02_obstacle_problem/psor_obstacle_2d.py:246: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+/private/tmp/claude-501/-Users-daisy-Desktop-option-python-code/027fe4cc-71b2-4b37-b15d-5b2e227d6b61/scratchpad/repo/02_obstacle_problem/psor_obstacle_2d.py:259: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+Iteration      1, ||u_new - u_old||_2 = 3.911e-01
+Iteration      2, ||u_new - u_old||_2 = 3.604e-01
+Iteration      3, ||u_new - u_old||_2 = 3.358e-01
+Iteration      4, ||u_new - u_old||_2 = 3.147e-01
+Iteration      5, ||u_new - u_old||_2 = 2.969e-01
+Iteration    500, ||u_new - u_old||_2 = 1.076e-05
+
+--- Solver info ---
+converged: True
+iterations: 857
+final_diff_norm: 9.849550581797063e-09
+min(u-f): 0.0
+min(-Delta_h u): -1.907429769687493e-07
+max(|(u-f)*(-Delta_h u)|): 4.534411045756258e-08
+grid_shape: (81, 81)
