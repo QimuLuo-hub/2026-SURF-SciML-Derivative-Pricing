@@ -1,0 +1,5 @@
+__pycache__/
+.pytest_cache/
+.venv/
+runs/
+inputs/v1_small_grid/dataset_v1_small_grid.npz

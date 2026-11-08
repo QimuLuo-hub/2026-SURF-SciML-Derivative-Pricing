@@ -1,0 +1,7 @@
+{
+  "seed": 101,
+  "architecture": "resnet_4x2x50",
+  "adam_steps": 40000,
+  "lbfgs_max_evaluations": 2000,
+  "source_frozen_config_sha256": "53356d97cc70924c7460408b0ea5d52bf70086a57c19a0e2b15630485c209552"
+}

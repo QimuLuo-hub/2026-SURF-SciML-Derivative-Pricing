@@ -83,8 +83,22 @@ Method design matters for American-option risk surfaces. With a fixed CN discret
 │   └── preliminary_reports/   Background theory, literature review and groundwork write-ups
 ├── preliminary_work/    Groundwork: European call FDM/PINN, obstacle problem PSOR,
 │                        American put CN+PSOR with a binomial benchmark (see its README)
-└── ...                  Code and results for the methods above (to be added)
+└── numerical_and_pinn/   Numerical experiments and Vanilla PINN code and results
 ```
+
+## Experiment code and results
+
+[**Numerical methods and Vanilla PINN**](numerical_and_pinn/) includes the
+CN–PSOR and Projected LU benchmark (R1), the DIRK–Policy–sinh refinement
+studies and reference data (R2), and the Arm C training, evaluation and
+poster-case results (R3–R4). Its README maps each result to its source and
+explains how to run the experiments.
+
+To be added by Zihan Liang:
+
+- Structure-aware PINN (Arm D)
+- 50,000-step binomial-tree price and free-boundary comparison
+- High-dimensional FC-HVI and DeepSets-HVI
 
 ## References
 
