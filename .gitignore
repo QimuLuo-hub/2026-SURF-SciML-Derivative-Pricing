@@ -4,6 +4,6 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 # Large regenerable PINN outputs (written by pinn_deepxde.py)
-01_european_call/results/pinn/test.dat
-01_european_call/results/pinn/train.dat
-01_european_call/results/pinn/residual.dat
+preliminary_work/01_european_call/results/pinn/test.dat
+preliminary_work/01_european_call/results/pinn/train.dat
+preliminary_work/01_european_call/results/pinn/residual.dat

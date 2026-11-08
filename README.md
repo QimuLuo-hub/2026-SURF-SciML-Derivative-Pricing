@@ -1,90 +1,95 @@
 # Scientific Machine Learning and Numerical Methods in Derivative Pricing
 
-The project studies free-boundary American-option risk surfaces under the Black–Scholes model. It compares Crank–Nicolson LCP solvers (PSOR, Brennan–Schwartz projected LU), builds a high-accuracy DIRK–Policy-Iteration–sinh reference, and tests structure-aware PINNs and high-dimensional hybrid-VI networks. The final poster is in [`poster/`](poster/2026_SURF_poster.pdf).
+This project develops and evaluates numerical methods and physics-informed neural networks (PINNs) for **free-boundary American-option risk surfaces** under the Black–Scholes framework. It also extends the approach to high-dimensional states with hybrid neural models.
 
-This repository holds the **preliminary work** that the poster builds on. It goes step by step: a European call with a closed-form benchmark, then the obstacle problem as the simplest free-boundary problem, then the American put solved as an LCP.
+Early exercise turns pricing into a variational-inequality (VI) problem. The option value, the exercise boundary and the price sensitivities must all be resolved consistently. The project:
 
-## Repository layout
+- compares Crank–Nicolson (CN) linear complementarity problem (LCP) solvers;
+- builds a high-accuracy reference that combines a diagonally implicit Runge–Kutta (DIRK) method, Policy Iteration and a sinh-mapped grid;
+- studies low-dimensional obstacle PINNs and high-dimensional hybrid-VI models.
+
+Main findings: Brennan–Schwartz projected LU is **26.0× faster** than projected SOR, and the Structure-aware PINN cuts the price RMSE **26.7×** compared with the Vanilla PINN. Structural enforcement improves neural accuracy. Recovering the free boundary reliably is still harder than approximating the price.
+
+📄 Poster: [`poster/2026_SURF_poster.pdf`](poster/2026_SURF_poster.pdf)
+
+## Model problem
+
+For asset price $S$, time to maturity $\tau$, risk-free rate $r$, dividend yield $q$ and volatility $\sigma$:
+
+$$\mathcal{L}_{BS}V = \tfrac12\sigma^2 S^2 V_{SS} + (r-q) S V_S - rV.$$
+
+- **European options**: $V_\tau - \mathcal{L}_{BS}V = 0$, with $V(S,0) = \Phi(S)$. The European call has a closed form, which is used to validate the numerical methods.
+- **American options**: early exercise adds the obstacle $V \ge \Phi$. The price then satisfies the variational inequality
+  $$\min\big(V - \Phi,\; V_\tau - \mathcal{L}_{BS}V\big) = 0.$$
+  The exercise region ($V = \Phi$) and the continuation region ($V_\tau - \mathcal{L}_{BS}V = 0$) are separated by the free boundary $S = S^*(\tau)$.
+- **Exercise regimes**: for the American put, $(K-S)^+$, exercise happens at low $S$. For a dividend-paying call, $(S-K)^+$, it happens at high $S$. A call with no dividend ($q = 0$) is never exercised early, so $C_A = C_E$.
+- **Key outputs**: $V(S,\tau)$, $S^*(\tau)$, $\Delta = V_S$ and $\Gamma = V_{SS}$.
+
+## Methods
+
+### Numerical PDE methods
+
+| | Method | Idea |
+|---|---|---|
+| N1 | **CN–PSOR** | Classical benchmark. Crank–Nicolson turns the VI into one LCP per time step, solved by projected SOR, which applies a relaxed Gauss–Seidel update and projects it onto the payoff obstacle. |
+| N1 | **CN–Brennan–Schwartz (projected LU)** | Exact LCP solver that uses an LU factorisation of the tridiagonal CN system and projected back-substitution. |
+| N2 | **DIRK–Policy–sinh** | High-accuracy reference. It uses L-stable second-order DIRK time stepping ($\theta = 1 - 1/\sqrt2$), solves each stage LCP by Policy Iteration, and places grid points near the strike with a sinh map. |
+
+### Physics-informed and hybrid neural methods
+
+Let $G_\Theta = V_\Theta - \Phi$ and $R_\Theta = V_{\Theta,\tau} - \mathcal{L}V_\Theta$. Complementarity then reads $G_\Theta \ge 0$, $R_\Theta \ge 0$, $G_\Theta R_\Theta = 0$.
+
+| | Model | Idea |
+|---|---|---|
+| P1 | **Vanilla soft-LCP PINN** | Learns $V_\Theta$ directly. The terminal, boundary, obstacle and complementarity conditions enter as soft penalties. |
+| P1 | **Structure-aware ETC+FB PINN** | Uses $V_\Theta = V_{\text{lift}} + s N_\Theta$ to enforce the terminal condition exactly. Complementarity is written as $\phi_{FB}(G_\Theta, R_\Theta) = 0$ with the Fischer–Burmeister function. |
+| P2 | **FC-HVI** | Fully connected network on the $d$-dimensional state $x$ and time $s$, with $d \in \{10, 20, 50\}$. Setting $V_\Theta = \Phi + s\,\mathrm{softplus}(N_\Theta)$ guarantees $V_\Theta \ge \Phi$. |
+| P2 | **DeepSets-HVI** | Mean pooling $z = \frac1d\sum_i \phi_\Theta(x_i)$ makes the model invariant to asset order. |
+
+## Key results
+
+**R1. LCP solver efficiency.** Both solvers use the same CN discretisation and a residual tolerance of $10^{-12}$. Projected LU brings the median runtime down from $2.44\times10^{-1}$ s to $9.38\times10^{-3}$ s, which is **26.0× faster** than CN–PSOR.
+
+**R2. High-accuracy reference.** The benchmark is a 50k-step binomial tree, for an American put with K = 1, T = 1, r = 0.05, q = 0.10, σ = 0.60.
+
+| Method | Price RMSE | Max \|price error\| |
+|---|---|---|
+| CN + PSOR | 5.01e-5 | 2.71e-4 |
+| **DIRK + Policy + sinh** | **2.70e-6** | **1.01e-5** |
+
+The reference converges at observed orders of about 1.9–2.5 under both temporal and spatial refinement, which is consistent with second-order behaviour.
+
+**R3. PINN evaluation.** Price RMSE against the high-accuracy reference, over S/K ∈ [0.5, 1.5] and τ/T ∈ [0.01, 1]:
+
+| Model | Price RMSE |
+|---|---|
+| Vanilla PINN | 2.79e-2 |
+| **Structure-aware PINN** | **1.05e-3** |
+| FC-HVI (d = 50) | 2.31e-3 |
+| DeepSets-HVI (d = 50) | 4.00e-3 |
+
+**R4. Free-boundary recovery.** Against the binomial tree, DIRK lowers the boundary RMSE from 9.40e-3 (CN–PSOR) to 2.39e-3. The Vanilla soft-LCP PINN detects only 0.6% of boundary crossings, compared with 28.2% for ETC+FB.
+
+## Conclusion
+
+Method design matters for American-option risk surfaces. With a fixed CN discretisation, projected LU makes the LCP solver much faster. DIRK–Policy–sinh gives a high-accuracy reference that converges regularly under refinement. How well the neural models perform depends strongly on how they represent the free-boundary structure. ETC+FB improves greatly on the vanilla PINN, and the hybrid-VI models extend the approach to high-dimensional states. Even so, an accurate price does not guarantee an accurate free boundary. Future work will focus on recovering the boundary and the Greeks with neural models, and on matched validation for high-dimensional and dividend-paying call settings.
+
+## Repository structure
 
 ```
 .
-├── poster/                     Final SURF poster
-├── reports/                    Weekly write-ups (theory, derivations, result tables)
-├── 01_european_call/           Black–Scholes European call: FDM schemes and a PINN
-├── 02_obstacle_problem/        1D / 2D obstacle problem solved with PSOR
-└── 03_american_put/            American put: CN + PSOR (LCP) and a binomial-tree benchmark
+├── poster/              Final project poster
+├── reports/             Weekly reports
+├── preliminary_work/    Groundwork: European call FDM/PINN, obstacle problem PSOR,
+│                        American put CN+PSOR with a binomial benchmark (see its README)
+└── ...                  Code and results for the methods above (to be added)
 ```
-
-Each code folder has a `results/` subfolder. The scripts write their figures there.
-
-### `reports/`
-
-| File | Content |
-|---|---|
-| `week0_preliminary_foundations.pdf` | Options, Black–Scholes PDE, European vs American, free boundary |
-| `week3_research_directions.pdf` | Literature review and possible research directions |
-| `week5_european_call_fdm_and_pinn.pdf` | Explicit / implicit / Crank–Nicolson FDM and DeepXDE PINN for the European call (code in `01_european_call/`) |
-| `week6-8_free_boundary_and_american_put.pdf` | Obstacle problem, LCP formulation, PSOR, American put and free-boundary detection (code in `02_obstacle_problem/`, `03_american_put/`) |
-
-### `01_european_call/`
-
-European call, K = 100, T = 1, r = 0.05, σ = 0.2, S ∈ [0, 300]. The Black–Scholes closed form is the reference.
-
-| Script | Method | Output |
-|---|---|---|
-| `fdm_explicit.py` | Explicit FDM, with a stability check | `results/fdm_explicit/` |
-| `fdm_implicit.py` | Fully implicit FDM (tridiagonal solve) | `results/fdm_implicit/` |
-| `fdm_crank_nicolson.py` | Crank–Nicolson FDM | `results/fdm_crank_nicolson/` |
-| `pinn_deepxde.py` | PINN with DeepXDE (adapted from the DeepXDE Black–Scholes example) | `results/pinn/` |
-| `plot_grid_schematic.py` | Figure of the (S, t) finite-difference grid | `results/grid_schematic.png` |
-
-Each FDM script runs four studies: refining with M = N, fixing space and refining time, fixing time and refining space, and varying σ. It saves pointwise and overall error plots. The full console output is in `results/logs/`. At (M, N) = (400, 7006), all three schemes reach RMSE ≈ 1e-4 against the closed form (explicit 9.7e-5, implicit 1.6e-4, CN 1.2e-4).
-
-### `02_obstacle_problem/`
-
-The obstacle problem (elastic string over an obstacle) is the simplest free-boundary problem. Its LCP is solved with projected SOR.
-
-| Script | Content |
-|---|---|
-| `psor_obstacle_1d.py` | 1D two-hump obstacle, PSOR solution and convergence history |
-| `psor_obstacle_2d.py` | 2D two-hump obstacle on an 81×81 grid, 5-point Laplacian, PSOR |
-| `plot_obstacle_schematic.py` | Exact schematic of the 1D obstacle problem (contact points A, B) |
-
-The solver output, including complementarity checks, is in `results/*_output.txt`.
-
-### `03_american_put/`
-
-American put, E = 10, r = 0.10, σ = 0.40, with maturities of 3 and 6 months. This is the numerical example in Wilmott, Dewynne & Howison (1993).
-
-| Script | Content |
-|---|---|
-| `psor_american_put.py` | Transform Black–Scholes to the heat equation, apply the θ-method (CN), solve the LCP by PSOR with an ω search, and detect the free boundary |
-| `binomial_american_put.py` | Binomial tree (N = 4000) used as an independent benchmark |
-
-The two methods agree to about 1e-4:
-
-| S | Payoff | PSOR 3M | Binomial 3M | PSOR 6M | Binomial 6M |
-|---|---|---|---|---|---|
-| 8  | 2.0000 | 2.0202 | 2.0202 | 2.0953 | 2.0954 |
-| 10 | 0.0000 | 0.6920 | 0.6923 | 0.9217 | 0.9219 |
-| 12 | 0.0000 | 0.1712 | 0.1712 | 0.3624 | 0.3625 |
-| 14 | 0.0000 | 0.0332 | 0.0331 | 0.1321 | 0.1322 |
-
-At t = 0, the detected exercise boundary is S_f ≈ 7.56 for 3 months and S_f ≈ 7.12 for 6 months (`results/psor_free_boundary.png`).
-
-## Running
-
-```bash
-pip install numpy scipy matplotlib        # FDM, PSOR, binomial
-pip install deepxde torch                 # PINN only (any DeepXDE backend works)
-python 01_european_call/fdm_crank_nicolson.py
-```
-
-Scripts can be run from any directory. Outputs always go to the `results/` folder next to the script.
 
 ## References
 
-- P. Wilmott, J. Dewynne, S. Howison. *Option Pricing: Mathematical Models and Computation*. Oxford Financial Press, 1993.
-- L. Lu, X. Meng, Z. Mao, G. E. Karniadakis. DeepXDE: A deep learning library for solving differential equations. *SIAM Review*, 63(1):208–228, 2021.
-- C. M. Elliott, J. R. Ockendon. *Weak and Variational Methods for Moving Boundary Problems*. Pitman, 1982.
-- M. Raissi, P. Perdikaris, G. E. Karniadakis. Physics-informed neural networks. *J. Comput. Phys.*, 378:686–707, 2019.
+1. Jaillet, P., Lamberton, D., and Lapeyre, B. (1990). Variational inequalities and the pricing of American options. *Acta Applicandae Mathematicae*, 21, 263–289.
+2. Huang, J., and Pang, J.-S. (1998). Option pricing and linear complementarity. *Journal of Computational Finance*, 2(1), 31–60.
+3. Alexander, R. (1977). Diagonally implicit Runge–Kutta methods for stiff O.D.E.'s. *SIAM Journal on Numerical Analysis*, 14(6), 1006–1021.
+4. Raissi, M., Perdikaris, P., and Karniadakis, G. E. (2019). Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations. *Journal of Computational Physics*, 378, 686–707.
+5. Fischer, A. (1992). A special Newton-type optimization method. *Optimization*, 24(3–4), 269–284.
+6. Zaheer, M., et al. (2017). Deep Sets. *Advances in Neural Information Processing Systems*, 30.
