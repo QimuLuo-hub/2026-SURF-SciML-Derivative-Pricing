@@ -1,9 +1,5 @@
 # Scientific Machine Learning and Numerical Methods in Derivative Pricing
 
-Summer Undergraduate Research Fellowship (SURF-2026-0159), Department of Foundational Mathematics, School of Mathematics and Physics.
-
-Team: Zihan Liang, Qimu Luo, Xiaoya Wu, Ruixi Xu. Supervisors: Dr. Ren Zhao, Dr. Yiru Ye.
-
 The project studies free-boundary American-option risk surfaces under the Black–Scholes model. It compares Crank–Nicolson LCP solvers (PSOR, Brennan–Schwartz projected LU), builds a high-accuracy DIRK–Policy-Iteration–sinh reference, and tests structure-aware PINNs and high-dimensional hybrid-VI networks. The final poster is in [`poster/`](poster/2026_SURF_poster.pdf).
 
 This repository holds the **preliminary work** that the poster builds on. It goes step by step: a European call with a closed-form benchmark, then the obstacle problem as the simplest free-boundary problem, then the American put solved as an LCP.
