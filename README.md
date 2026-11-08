@@ -79,7 +79,8 @@ Method design matters for American-option risk surfaces. With a fixed CN discret
 ```
 .
 ├── poster/              Final project poster
-├── reports/             Weekly reports
+├── reports/             Reports
+│   └── preliminary_reports/   Background theory, literature review and groundwork write-ups
 ├── preliminary_work/    Groundwork: European call FDM/PINN, obstacle problem PSOR,
 │                        American put CN+PSOR with a binomial benchmark (see its README)
 └── ...                  Code and results for the methods above (to be added)

@@ -6,7 +6,14 @@ This is the groundwork done before the main project. It moves step by step towar
 2. **Obstacle problem**: the simplest free-boundary problem, written as a linear complementarity problem (LCP) and solved with projected SOR (PSOR).
 3. **American put**: the Crank–Nicolson + PSOR LCP solver from step 2, applied to the American put. A binomial tree serves as the benchmark.
 
-The derivations and result tables are in the weekly reports in [`../reports/`](../reports). `week5` covers part 1, and `week6-8` covers parts 2 and 3.
+The derivations and result tables are in [`../reports/preliminary_reports/`](../reports/preliminary_reports):
+
+| Report | Covers |
+|---|---|
+| `01_foundations_options_and_black_scholes.pdf` | Options, the Black–Scholes PDE, European vs American options |
+| `02_literature_review_and_research_directions.pdf` | Literature review and possible research directions |
+| `03_european_call_fdm_and_pinn.pdf` | Part 1 |
+| `04_free_boundary_obstacle_and_american_put.pdf` | Parts 2 and 3 |
 
 Each subfolder has a `results/` folder. The scripts write their output there, whatever directory they are run from.
 
