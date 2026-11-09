@@ -5,7 +5,7 @@ PINN) evidence for the SURF 2026 poster. [Poster PDF](../poster/2026_SURF_poster
 
 | Poster result | Code and archived evidence |
 | --- | --- |
-| **R1** Projected LU versus CN–PSOR | [01_cn_lcp_solvers](01_cn_lcp_solvers/) contains the benchmark entry point, the frozen solver choice, 6,030 raw measurements, the summary and correctness tables, and two original plots. The original pooled medians were 0.243615125 s for PSOR and 0.0093837915 s for Projected LU, a ratio of 25.961 (26.0 on the poster). |
+| **R1** Projected LU versus CN–PSOR | [01_cn_lcp_solvers](01_cn_lcp_solvers/) contains the benchmark entry point, the frozen solver choice, 6,030 raw measurements and the summary and correctness tables. The original pooled medians were 0.243615125 s for PSOR and 0.0093837915 s for Projected LU, a ratio of 25.961 (26.0 on the poster). |
 | **R2** DIRK time and space refinement | [02_dirk_reference](02_dirk_reference/) contains both refinement studies. The poster's six rows are for `put_T025_s020_r001_q000`, using `value_rmse` and `gamma_rmse`. The [reference export](02_dirk_reference/results/reference/) is for the separate poster comparison contract, `put_T100_s060_r005_q010`. |
 | **R3/R4** Vanilla PINN | [03_vanilla_pinn](03_vanilla_pinn/) contains the seed-101 training/scoring entry point, stored held-out metrics for 67 contracts, and the pointwise export for the single poster contract. Against the stored DIRK surface, its price RMSE is 0.0278823 and it finds 1 of 163 boundary points (0.6%). |
 
