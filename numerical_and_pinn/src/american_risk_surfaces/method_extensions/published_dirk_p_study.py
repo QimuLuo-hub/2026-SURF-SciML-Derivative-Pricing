@@ -57,7 +57,7 @@ from american_risk_surfaces.workspace import (
 
 
 PROJECT_ROOT = PACKAGE_ROOT
-STUDY_DIR = SUPPLEMENTARY_DIR / "02_reference_audits" / "published_dirk_p"
+STUDY_DIR = SUPPLEMENTARY_DIR / "03_published_dirk_p"
 RESULTS_DIR = RUNS_DIR / "published_dirk_p"
 REPORTS_DIR = RESULTS_DIR / "reports"
 PROTOCOL_DIR = RESULTS_DIR / "00_protocol"
@@ -743,17 +743,12 @@ def synthesize() -> dict[str, Path]:
     _make_figures(metrics, convergence, timing)
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     english_path = REPORTS_DIR / "published_dirk_p_technical_report.md"
-    chinese_path = REPORTS_DIR / "published_dirk_p_plain_language_CN.md"
     english_path.write_text(
         _english_report(decision, metrics, timing), encoding="utf-8"
-    )
-    chinese_path.write_text(
-        _chinese_report(decision, metrics, timing), encoding="utf-8"
     )
     return {
         "decision": decision_path,
         "english_report": english_path,
-        "chinese_report": chinese_path,
     }
 
 
@@ -1199,64 +1194,6 @@ def _english_report(
         [
             "",
             "The current reference and poster were not modified.",
-        ]
-    )
-    return "\n".join(lines) + "\n"
-
-
-def _chinese_report(
-    decision: dict[str, Any], metrics: list[dict[str, str]], timing: dict[str, Any]
-) -> str:
-    failed = [row for row in metrics if not _as_bool(row["regime_pass"])]
-    lines = [
-        "# Published DIRK-P 高精度候选实验（中文结论）",
-        "",
-        f"最终决定：**{decision['decision']}**。",
-        "",
-        "本次实现忠实保留了论文的 L-stable Cash DIRK、两阶段 penalty 迭代、"
-        "Large=1e7、tol=1e-7、二次时间网格、前两步 BE-P、论文的 [0,2K] 均匀/远端 sinh 网格"
-        "以及非均匀二阶中心差分。没有在求解后把价格强行投影到 payoff 上。",
-        "",
-        "不可避免的区别是：论文的一维实验是 American put；SURF 还要求 dividend call 和 q=0 call，"
-        "并保留现有 Smax=4K 与 call 远端边界。这些属于明确披露的项目外推，不是论文原样案例。",
-        "",
-        f"12 个 regime 中有 {decision['passing_regimes']}/{decision['regime_count']} 个通过全部"
-        "价格、边界、Delta、stable-mask Gamma 和 VI 门槛。",
-        "",
-        "论文 penalty 的 tol=1e-7 是迭代停止条件，不是 SURF 正式 obstacle/LCP 验收容差。"
-        f"所有计算都按论文规则收敛，但只有 {decision['strict_vi_passing_regimes']}/"
-        f"{decision['regime_count']} 个 regime 通过项目冻结的 normalized obstacle/LCP "
-        f"{decision['frozen_normalized_obstacle_tolerance']:.0e} 门槛。",
-        "",
-        f"联合二阶收敛比例为 {decision['joint_second_order_fraction']:.3f}（门槛 "
-        f"{decision['required_joint_second_order_fraction']:.3f}）。",
-        "",
-        f"运行时间的 paired median candidate/reference 比值为 "
-        f"{timing['paired_median_candidate_over_reference']:.4f}，即约 "
-        f"{timing['paired_median_speedup']:.4f}x speedup；p95 比值为 "
-        f"{timing['pooled_p95_candidate_over_reference']:.4f}。",
-        "",
-        "## 逐 regime 正式结果",
-        "",
-        "| Regime | Price max | Boundary error | Delta max | Stable Gamma max | VI residual/gate | 通过 |",
-        "|---|---:|---:|---:|---:|---:|:---:|",
-    ]
-    for row in metrics:
-        lines.append(
-            f"| `{row['regime_id']}` | {float(row['price_max_error']):.3g} | "
-            f"{float(row['boundary_abs_error']):.3g} | {float(row['delta_max_error']):.3g} | "
-            f"{float(row['gamma_max_error']):.3g} | "
-            f"{float(row['max_normalized_lcp_residual']):.3g}/{MAX_NORMALIZED_PENALTY_LCP_RESIDUAL:.0e} | "
-            f"{'是' if _as_bool(row['regime_pass']) else '否'} |"
-        )
-    if failed:
-        lines.extend(["", "未通过的 regimes 与原因：", ""])
-        for row in failed:
-            lines.append(f"- `{row['regime_id']}`：{', '.join(_failed_gates(row))}")
-    lines.extend(
-        [
-            "",
-            "这项结果只决定候选资格；现有 DIRK+Policy+sinh 结果、当前 reference 和 poster 均未被覆盖或修改。",
         ]
     )
     return "\n".join(lines) + "\n"

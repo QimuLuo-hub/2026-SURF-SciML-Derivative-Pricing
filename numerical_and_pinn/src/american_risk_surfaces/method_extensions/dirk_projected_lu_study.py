@@ -56,7 +56,7 @@ from american_risk_surfaces.workspace import (
 
 
 PROJECT_ROOT = PACKAGE_ROOT
-STUDY_DIR = SUPPLEMENTARY_DIR / "02_reference_audits" / "dirk_projected_lu"
+STUDY_DIR = SUPPLEMENTARY_DIR / "02_dirk_projected_lu"
 RESULTS_DIR = RUNS_DIR / "dirk_projected_lu_substitution"
 REPORTS_DIR = RESULTS_DIR / "reports"
 PROTOCOL_DIR = RESULTS_DIR / "00_protocol"
@@ -507,7 +507,7 @@ def synthesize_substitution_audit(
     audit_dir: Path | str = AUDIT_DIR,
     reports_dir: Path | str = REPORTS_DIR,
 ) -> dict[str, Path]:
-    """Create technical and plain-language reports from immutable audit CSVs."""
+    """Create the technical report and structural summary from the audit CSVs."""
 
     audit = Path(audit_dir)
     reports = Path(reports_dir)
@@ -528,15 +528,8 @@ def synthesize_substitution_audit(
     structural_summary_path = reports / "stage_structural_summary.csv"
     _write_csv(structural_summary_path, structural_summary)
     technical_path = reports / "dirk_projected_lu_substitution_report.md"
-    chinese_path = reports / "dirk_projected_lu_substitution_结论_CN.md"
     technical_path.write_text(
         _technical_report(
-            decision, agreement, paired, runtime_summary, reason_counts
-        ),
-        encoding="utf-8",
-    )
-    chinese_path.write_text(
-        _chinese_report(
             decision, agreement, paired, runtime_summary, reason_counts
         ),
         encoding="utf-8",
@@ -585,7 +578,7 @@ def synthesize_substitution_audit(
         },
         "report_hashes": {
             portable_path(path): sha256_file(path)
-            for path in (technical_path, chinese_path, structural_summary_path)
+            for path in (technical_path, structural_summary_path)
         },
         "environment": environment_manifest(),
     }
@@ -593,7 +586,6 @@ def synthesize_substitution_audit(
     _write_json(provenance_path, provenance)
     return {
         "technical_report": technical_path,
-        "chinese_report": chinese_path,
         "structural_summary": structural_summary_path,
         "provenance": provenance_path,
     }
@@ -1344,60 +1336,6 @@ def _technical_report(
             "",
             "A faster result alone does not promote the candidate; all structural, "
             "residual, price, boundary, Delta, and stable-mask Gamma gates must pass.",
-        ]
-    )
-    return "\n".join(lines) + "\n"
-
-
-def _chinese_report(
-    decision: dict[str, Any],
-    agreement: list[dict[str, str]],
-    paired: list[dict[str, str]],
-    runtime_summary: list[dict[str, str]],
-    reason_counts: dict[str, int],
-) -> str:
-    failed = [row for row in agreement if row.get("all_correctness_gates_passed") != "True"]
-    lines = [
-        "# DIRK+sinh 内部求解器替换实验：中文结论",
-        "",
-        f"最终决定：**{decision['decision']}**。",
-        "",
-        "本实验没有改变 DIRK、sinh 网格、分辨率、边界、Greek 算法或稳定 mask；"
-        "只把每个隐式障碍问题的 Policy Iteration 换成了 Projected LU。",
-        "",
-        "数值结果方面，12/12 个 regime 的 LCP residual、价格、boundary、Delta、"
-        "stable-mask Gamma 和金融结构检查都通过。",
-        "结构适用性方面只有 11/12 通过；"
-        "`put_T200_s020_r001_q010` 的全部 1,918 个 stages 出现 positive "
-        "off-diagonal，因此不满足预注册的 M-matrix sufficient condition。",
-        f"速度方面，Projected LU / Policy 的配对 median 时间比为 "
-        f"`{decision['paired_ratio_median']:.6g}`：Projected LU 约慢 "
-        f"`{100.0 * (decision['paired_ratio_median'] - 1.0):.2f}%`，没有加速。",
-        f"Policy pooled p95 为 `{decision['policy_pooled_p95_seconds']:.6g}s`，"
-        f"Projected LU pooled p95 为 "
-        f"`{decision['projected_lu_pooled_p95_seconds']:.6g}s`。",
-        "观察到的最大差异为：价格 "
-        f"`{_max_metric(agreement, 'full_trajectory_price_max_difference'):.6g}`，"
-        f"boundary `{_max_metric(agreement, 'boundary_max_abs_difference'):.6g}`，"
-        f"Delta `{_max_metric(agreement, 'delta_max_difference'):.6g}`，"
-        f"stable-mask Gamma `{_max_metric(agreement, 'gamma_max_difference'):.6g}`。",
-    ]
-    if failed:
-        lines.extend(["", "未通过的 regime："])
-        for row in failed:
-            lines.append(f"- `{row['regime_id']}`：{row.get('failure_reasons', '')}")
-    if reason_counts:
-        lines.extend(
-            [
-                "",
-                "结构条件失败统计：`" + json.dumps(reason_counts, sort_keys=True) + "`。",
-            ]
-        )
-    lines.extend(
-        [
-            "",
-            "解释限制：Projected LU 即使成功，也只是更快地求解同一个离散 stage "
-            "LCP；高精度仍主要来自 L-stable DIRK 与 strike-concentrated sinh grid。",
         ]
     )
     return "\n".join(lines) + "\n"

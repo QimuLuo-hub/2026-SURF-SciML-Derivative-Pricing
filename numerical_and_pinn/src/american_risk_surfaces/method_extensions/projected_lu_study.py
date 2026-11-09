@@ -453,7 +453,7 @@ def run_heldout_benchmark(
 
 
 def synthesize_projected_lu() -> dict[str, Path]:
-    """Generate figures and the English/Chinese decision reports."""
+    """Generate figures and the decision report."""
 
     decision_path = RESULTS_DIR / "method_decision.json"
     if not decision_path.exists():
@@ -468,12 +468,8 @@ def synthesize_projected_lu() -> dict[str, Path]:
     figure_paths = _make_figures(figures_dir, eligibility, summary, paired)
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     english_path = REPORTS_DIR / "projected_lu_technical_report.md"
-    chinese_path = REPORTS_DIR / "projected_lu_结论_CN.md"
     english_path.write_text(
         _english_report(decision, summary, accuracy, figure_paths), encoding="utf-8"
-    )
-    chinese_path.write_text(
-        _chinese_report(decision, summary, accuracy, figure_paths), encoding="utf-8"
     )
     manifest_path = RESULTS_DIR / "figure_manifest.json"
     _write_json(
@@ -483,7 +479,6 @@ def synthesize_projected_lu() -> dict[str, Path]:
     return {
         "decision": decision_path,
         "english_report": english_path,
-        "chinese_report": chinese_path,
         "figure_manifest": manifest_path,
     }
 
@@ -1105,54 +1100,4 @@ not theorem-certified.
 
 Figures: `{figures['runtime'].name}`, `{figures['paired_ratio'].name}`,
 `{figures['eligibility'].name}`.
-"""
-
-
-def _chinese_report(
-    decision: dict[str, Any],
-    summary: list[dict[str, str]],
-    accuracy: list[dict[str, str]],
-    figures: dict[str, Path],
-) -> str:
-    selected = decision["selected_solver"]
-    rows = {row["arm"]: row for row in summary}
-    projected_accuracy = [row for row in accuracy if row["solver"] == selected]
-    max_difference = max(
-        float(row["max_abs_trajectory_difference"]) for row in projected_accuracy
-    )
-    max_residual = max(
-        float(row["max_normalized_lcp_residual"]) for row in projected_accuracy
-    )
-    return f"""# Projected LU / Brennan--Schwartz 中文结论
-
-最终状态：**{decision['status']}**
-
-正式候选是 `{selected}`。它与 CN+PSOR、CN+Policy 使用完全相同的
-121x121 CN-LCP 和 1e-12 residual 容差。
-
-## 正确性
-
-- 67 个 held-out regimes 全部数值认证：`{decision['all_numerically_certified']}`
-- 全部满足经典理论充分条件：`{decision['all_theorem_eligible']}`
-- 与 Policy 完整轨迹最大差异：`{max_difference:.6g}`
-- 最大 normalized LCP residual：`{max_residual:.6g}`
-
-## 速度
-
-| 方法 | Median (秒) | p95 (秒) |
-|---|---:|---:|
-| CN+PSOR | {float(rows['psor']['median_seconds']):.6g} | {float(rows['psor']['p95_seconds']):.6g} |
-| CN+Policy | {float(rows['policy_iteration']['median_seconds']):.6g} | {float(rows['policy_iteration']['p95_seconds']):.6g} |
-| {selected} | {float(rows[selected]['median_seconds']):.6g} | {float(rows[selected]['p95_seconds']):.6g} |
-
-逐 regime 的 median LU/Policy 比率为
-`{decision['paired_median_lu_over_policy']:.6g}`；只看真正具有提前行权风险的
-put/dividend-call，比率为
-`{decision['early_exercise_paired_median_lu_over_policy']:.6g}`。
-
-该结论只适用于冻结的 SURF 参数域。经典 M-matrix 充分条件之外的情况只能称为
-“在当前数值集合中通过 residual 和 Policy 对照认证”，不能声称受到无条件理论保证。
-
-图表：`{figures['runtime'].name}`、`{figures['paired_ratio'].name}`、
-`{figures['eligibility'].name}`。
 """

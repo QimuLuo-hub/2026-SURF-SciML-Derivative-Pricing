@@ -93,6 +93,8 @@ CN–PSOR and Projected LU benchmark (R1), the DIRK–Policy–sinh refinement
 studies and reference data (R2), and the Arm C training, evaluation and
 poster-case results (R3–R4). Its README maps each result to its source and
 explains how to run the experiments.
+The [supplementary studies](numerical_and_pinn/supplementary/) cover the
+four-solver benchmark and the two DIRK reference audits.
 
 To be added by Zihan Liang:
 

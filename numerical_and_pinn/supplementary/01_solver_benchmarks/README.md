@@ -1,4 +1,30 @@
-# Unified Poster Evidence Report
+# Same-grid solver comparison
+
+This four-solver run gave a 30.2× ratio between the pooled median times for
+CN–PSOR and Projected LU. The 26.0× result on the poster comes from the
+[original R1 benchmark](../../01_cn_lcp_solvers/).
+
+The [parameter selection](results/00_protocol/) and
+[benchmark results](results/01_strict_solvers/) include the frozen Penalty/Newton
+configuration, validation tables, raw timings and correctness checks. The
+validation record was regenerated using the original selection rule after a
+stale process overwrote its manifest. The 8,040 formal timing samples were
+preserved. [Full original archive](https://github.com/Ruixixu-hub/2026-surf-american-risk-surfaces/tree/3aa2d821b9c92d095658782e7bcaf1322a90a7cb/method_extensions/results/14_poster_unified_comparison)
+
+## Reproduce the study
+
+Run from `numerical_and_pinn/` with `PYTHONPATH=$PWD/src`.
+
+~~~sh
+python supplementary/01_solver_benchmarks/62_strict_solver_poster_comparison.py benchmark
+python supplementary/01_solver_benchmarks/63_accuracy_reference_evidence_audit.py
+python supplementary/01_solver_benchmarks/64_poster_experiment_synthesis.py
+~~~
+
+The benchmark uses the archived penalty choice by default. Run experiment 62
+with `validate` first to repeat the validation phase. Experiment 63 reads the
+[main R2 results](../../02_dirk_reference/results/) to regenerate the Gamma
+summaries below.
 
 ## Benchmark roles
 

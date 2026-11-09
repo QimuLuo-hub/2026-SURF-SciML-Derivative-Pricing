@@ -550,13 +550,9 @@ def synthesize_poster_comparison() -> dict[str, Path]:
     decision_path = RESULTS_DIR / "method_decision.json"
     _write_json(decision_path, integrated)
     technical_path = REPORTS_DIR / "poster_evidence_report.md"
-    chinese_path = REPORTS_DIR / "poster_evidence_结论_CN.md"
     technical_path.write_text(
         _technical_report(strict, accuracy, runtime, correctness, temporal, spatial),
         encoding="utf-8",
-    )
-    chinese_path.write_text(
-        _chinese_report(strict, accuracy, runtime, correctness), encoding="utf-8"
     )
     manifest_path = RESULTS_DIR / "figure_manifest.json"
     _write_json(
@@ -566,7 +562,6 @@ def synthesize_poster_comparison() -> dict[str, Path]:
     return {
         "decision": decision_path,
         "technical_report": technical_path,
-        "chinese_report": chinese_path,
         "figure_manifest": manifest_path,
     }
 
@@ -979,39 +974,6 @@ def _technical_report(
         )
     lines.extend(["", f"Reference limitation: {accuracy['reference_limit']}"])
     return "\n".join(lines) + "\n"
-
-
-def _chinese_report(
-    strict: dict[str, Any],
-    accuracy: dict[str, Any],
-    runtime: list[dict[str, str]],
-    correctness: list[dict[str, str]],
-) -> str:
-    runtime_by = {row["arm"]: row for row in runtime}
-    correct_by = {row["arm"]: row for row in correctness}
-    return (
-        "# Poster 统一实验结论\n\n"
-        "- CN+PSOR 是 Basic / Original Classical Benchmark。\n"
-        "- CN+Policy Iteration 是 Strengthened Classical Benchmark 1。\n"
-        "- CN+Projected LU 是 Strengthened Classical Benchmark 2。\n"
-        "- DIRK+Policy+sinh 是 High-Accuracy Numerical Reference。\n\n"
-        f"Strict comparison 状态：**{strict['status']}**。Penalty/Newton 状态："
-        f"**{strict['penalty_newton_status']}**。\n\n"
-        f"Projected LU median={float(runtime_by['projected_lu_single']['median_seconds']):.6g}s，"
-        f"Policy median={float(runtime_by['policy_iteration']['median_seconds']):.6g}s，"
-        f"PSOR median={float(runtime_by['psor']['median_seconds']):.6g}s。\n\n"
-        f"Paired median ratios：Policy/PSOR={strict['paired_median_policy_over_psor']:.4f}，"
-        f"Projected-LU/Policy={strict['paired_median_projected_lu_over_policy']:.4f}，"
-        f"Penalty/Policy={strict['paired_median_penalty_over_policy']:.4f}。"
-        f"在 {strict['early_exercise_regime_count']} 个真正有提前行权风险的 regimes 中，"
-        f"Penalty/Policy={strict['early_exercise_paired_median_penalty_over_policy']:.4f}。\n\n"
-        f"Penalty/Newton 通过共同 residual gate "
-        f"{correct_by['penalty_newton']['common_gate_regime_count']}/"
-        f"{correct_by['penalty_newton']['regime_count']} regimes；其最大 normalized LCP residual 为 "
-        f"{float(correct_by['penalty_newton']['max_normalized_lcp_residual']):.6g}。"
-        "无论速度如何，只有全部共同正确性 gate 通过才可提升为 benchmark。\n\n"
-        f"Accuracy-reference audit：**{accuracy['status']}**；Gamma 仅允许在 validated stable mask 上报告。\n"
-    )
 
 
 def _read_csv(path: Path) -> list[dict[str, str]]:

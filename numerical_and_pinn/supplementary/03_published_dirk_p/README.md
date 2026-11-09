@@ -1,14 +1,40 @@
-# Published DIRK-P High-Accuracy Candidate Audit
+# Published DIRK-P
+
+This study reproduces a published DIRK-P example and tests the method as a
+candidate to replace the poster's DIRK reference. The archived files include
+the [paper reproduction](results/01_reproduction/), [formal audit](results/02_audit/)
+and [correction record](results/00_protocol/metric_gate_correction.json).
+The correction applied the project's frozen residual tolerance to the existing
+results. The original solutions and timings were preserved. The first scoring
+pass and earlier rules are in the
+[full original archive](https://github.com/Ruixixu-hub/2026-surf-american-risk-surfaces/tree/e31a794e1460fc9ed0c50eec86730ede3c782e33/method_extensions/results/16_published_dirk_p).
+
+## Reproduce the study
+
+Run from `numerical_and_pinn/` with `PYTHONPATH=$PWD/src`.
+
+~~~sh
+python supplementary/03_published_dirk_p/68_published_dirk_p_protocol.py
+python supplementary/03_published_dirk_p/69_published_dirk_p_reproduction.py
+python supplementary/03_published_dirk_p/70_published_dirk_p_formal_audit.py
+python supplementary/03_published_dirk_p/71_published_dirk_p_synthesis.py
+~~~
+
+The current scripts use the corrected rules. To repeat the historical scoring
+correction, copy the archived first pass into `published_dirk_p/02_audit/`
+under a separate `SURF_OUTPUT_DIR`, then run experiment 72 on that copy.
+
+## Results
 
 Decision: **RETAIN_DIRK_POLICY_SINH**
 
-## Fidelity
+### Fidelity
 
 The Cash DIRKa coefficients, DIRK-P stage equations, finite penalty (Large=1e7), tol=1e-7 stop, quadratic time mesh, first-two-step BE-P damping, the published uniform-to-2K/sinh-tail grid (d=K/10), and nonuniform central differences were implemented directly. No payoff projection was used to hide finite-penalty error.
 
 Unavoidable SURF extensions are the dividend-paying and no-dividend calls, the existing Smax=4K regimes rather than the paper's representative 5K example, and SURF's exact far-call boundary. The paper's one-dimensional experiment itself is a put.
 
-## Twelve-regime evidence
+### Twelve-regime evidence
 
 The paper stopping rule and the SURF acceptance rule are distinct: all runs may converge under the published penalty iteration while still failing the common frozen normalized obstacle/LCP tolerance of 1e-12.
 
@@ -31,7 +57,7 @@ Strict VI gate: 3/12 regimes pass; normalized obstacle and LCP tolerances are bo
 
 Joint second-order fraction: 1.000 (frozen gate 0.900).
 
-## Runtime
+### Runtime
 
 Pooled median: 0.615159 s (candidate) versus 0.618124 s (current reference).
 

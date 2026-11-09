@@ -88,20 +88,15 @@ python 03_vanilla_pinn/export_arm_c_predictions.py \
 
 ## Supplementary studies
 
-- [01_solver_benchmarks](supplementary/01_solver_benchmarks/) holds the separate
-  30.2× rerun and the Policy Iteration and Penalty/Newton comparison. The
-  poster's 26.0× is from R1 above.
-- [DIRK with Projected LU](supplementary/02_reference_audits/dirk_projected_lu/)
-  checks replacing Policy Iteration inside DIRK. It retains the original
-  DIRK–Policy–sinh reference.
-- [Published DIRK-P](supplementary/02_reference_audits/published_dirk_p/)
-  reproduces and audits a published alternative. Its archived evidence
-  includes the corrected residual gate and the earlier scoring record.
+- [Solver benchmarks](supplementary/01_solver_benchmarks/) contains the
+  separate 30.2× rerun and the Policy Iteration and Penalty/Newton comparison.
+- [DIRK with Projected LU](supplementary/02_dirk_projected_lu/) tests replacing
+  Policy Iteration inside DIRK. The study retained the DIRK–Policy–sinh reference.
+- [Published DIRK-P](supplementary/03_published_dirk_p/) reproduces and audits a
+  published alternative, with the corrected results and residual rule.
 
-The supplementary scripts write new outputs under `runs/` by default. Set
-`SURF_OUTPUT_DIR` to use a different location. The original plots and reports
-are included with their archived tables. See
-[supplementary/README.md](supplementary/README.md) for run order.
+Each study includes code, results and a link to its full original archive.
+See the [supplementary index](supplementary/) for the shared setup.
 
 ## Provenance and scope
 
