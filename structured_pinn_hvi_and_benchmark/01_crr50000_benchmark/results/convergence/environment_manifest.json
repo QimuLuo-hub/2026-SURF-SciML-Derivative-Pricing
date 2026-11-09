@@ -1,0 +1,8 @@
+{
+  "cpu_count": 10,
+  "machine": "arm64",
+  "numpy": "2.0.2",
+  "platform": "macOS-26.5.2-arm64-arm-64bit",
+  "processor": "arm",
+  "python": "3.9.6"
+}
