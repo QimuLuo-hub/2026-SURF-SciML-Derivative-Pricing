@@ -1,0 +1,3 @@
+# Preserve checksummed input and evidence bytes across checkout platforms.
+*.csv -text
+*.json -text

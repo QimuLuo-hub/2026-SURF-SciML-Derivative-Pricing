@@ -1,0 +1,43 @@
+{
+  "check_spots": [
+    0.25,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.8,
+    1.0,
+    1.2,
+    1.4
+  ],
+  "check_taus": [
+    0.1,
+    0.5,
+    1.0
+  ],
+  "confirm_spots": [
+    0.8,
+    1.0,
+    1.2
+  ],
+  "confirm_steps": [
+    32768,
+    50000
+  ],
+  "contract": {
+    "K": 1.0,
+    "T": 1.0,
+    "option_type": "put",
+    "q": 0.1,
+    "r": 0.05,
+    "sigma": 0.6
+  },
+  "probe_steps": [
+    2048,
+    4096,
+    8192,
+    16384
+  ],
+  "scientific_decision": "not_automatically_adjudicated",
+  "workers": 4
+}

@@ -1,0 +1,13 @@
+{
+  "completed_requested_jobs": 126,
+  "elapsed_this_invocation_seconds": 8.715064709,
+  "expected_jobs": 126,
+  "requested_phase": "all",
+  "results": {
+    "convergence_summary": "convergence_summary.csv",
+    "point_results": "point_results.csv"
+  },
+  "resume_supported": true,
+  "status": "completed",
+  "total_ledger_rows": 126
+}

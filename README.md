@@ -83,7 +83,10 @@ Method design matters for American-option risk surfaces. With a fixed CN discret
 │   └── preliminary_reports/   Background theory, literature review and groundwork write-ups
 ├── preliminary_work/    Groundwork: European call FDM/PINN, obstacle problem PSOR,
 │                        American put CN+PSOR with a binomial benchmark (see its README)
-└── numerical_and_pinn/   Numerical experiments and Vanilla PINN code and results
+├── numerical_and_pinn/   Numerical experiments and Vanilla PINN code and results
+└── structured_pinn_hvi_and_benchmark/
+                         Binomial benchmark, structure-aware PINN, high-dimensional
+                         HVI, shared-reference comparison and R3 figure
 ```
 
 ## Experiment code and results
@@ -96,11 +99,11 @@ explains how to run the experiments.
 The [supplementary studies](numerical_and_pinn/supplementary/) cover the
 four-solver benchmark and the two DIRK reference audits.
 
-To be added by Zihan Liang:
-
-- Structure-aware PINN (Arm D)
-- 50,000-step binomial-tree price and free-boundary comparison
-- High-dimensional FC-HVI and DeepSets-HVI
+[**Binomial benchmark, structure-aware PINN and high-dimensional HVI**](structured_pinn_hvi_and_benchmark/)
+includes the 50,000-step binomial-tree benchmark and the CN–PSOR/DIRK
+comparison against it (R2, R4), the structure-aware ETC+FB PINN (Arm D),
+the FC-HVI and DeepSets-HVI models (P2), the shared-reference R3 table and
+the R3 figure. Its README lists a check script for each poster number.
 
 ## References
 
